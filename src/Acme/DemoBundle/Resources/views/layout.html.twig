@@ -1,0 +1,33 @@
+{% extends "TwigBundle::layout.html.twig" %}
+
+{% block head %}
+<link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/acmedemo/css/demo.css') }}" />
+    {% block javascripts %}
+<script type="text/javascript" src="{{ asset('bundles/jdareclank/js/jquery.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        var myClank = Clank.connect("ws://localhost:20000");
+
+        myClank.on("socket/connect", function(session) {
+//session is an Autobahn JS WAMP session.
+
+            console.log("Successfully Connected!");
+        })
+
+        myClank.on("socket/disconnect", function(error) {
+//error provides us with some insight into the disconnection: error.reason and error.code
+
+            console.log("Disconnected for " + error.reason + " with code " + error.code);
+        })
+    });
+</script>    
+    {% endblock %}
+{% endblock %}
+
+{% block title 'Demo Bundle' %}
+
+{% block body %}
+This for testing
+{{ clank_client() }}     
+{% endblock %}
