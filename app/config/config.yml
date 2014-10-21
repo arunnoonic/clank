@@ -75,4 +75,10 @@ clank:
     web_socket_server:
         port: 20000        #The port the socket server will listen on
         host: 127.0.0.1   #(optional) The host ip to bind to
-    
+    topic:
+        name: "acme" #Important! this is the topic namespace used to match to this service!
+        service: "acme_hello.topic_sample_service" #The service id.
+    # Add as many as you need
+    #    -
+    #        name: "other"
+    #        service: "acme_hello.topic_other_service"

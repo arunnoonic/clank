@@ -12,7 +12,16 @@
         myClank.on("socket/connect", function(session) {
 //session is an Autobahn JS WAMP session.
 
-            console.log("Successfully Connected!");
+            //the callback function in "subscribe" is called everytime an event is published in that channel.
+            session.subscribe("acme/channel", function(uri, payload) {
+                console.log("Received message", payload.msg);
+            });
+
+            session.publish("acme/channel", {msg: "This is a message!"});
+
+            session.unsubscribe("acme/channel");
+
+            session.publish("acme/channel", {msg: "I won't see this"});
         })
 
         myClank.on("socket/disconnect", function(error) {
@@ -21,13 +30,13 @@
             console.log("Disconnected for " + error.reason + " with code " + error.code);
         })
     });
-</script>    
+    </script>    
     {% endblock %}
 {% endblock %}
 
 {% block title 'Demo Bundle' %}
 
 {% block body %}
-This for testing
+    This for testing
 {{ clank_client() }}     
 {% endblock %}
